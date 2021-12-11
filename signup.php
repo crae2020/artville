@@ -6,10 +6,6 @@ error_reporting(0);
 
 session_start();
 
-if (isset($_SESSION['username'])) {
-    header("Location: login.php");
-}
-
 if (isset($_POST['register'])) {
 	$username = $_POST['username'];
 	$email = $_POST['email'];
@@ -23,27 +19,18 @@ if (isset($_POST['register'])) {
 			$sql = "INSERT INTO users (username, email, password)
 					VALUES ('$username', '$email', '$password')";
 			$result = mysqli_query($conn, $sql);
-			if ($result) {
-				echo "<script>alert('Wow! User Registration Completed.')</script>";
-				$username = "";
-				$email = "";
-				$_POST['password'] = "";
-				$_POST['cpassword'] = "";
-			} else {
-				echo "<script>alert('Woops! Something Wrong Went.')</script>";
-			}
+            sleep(3);
+            header("Location: login.php");
 		} else {
-			echo "<script>alert('Woops! Email Already Exists.')</script>";
+			echo "<script>alert('Email Already Exists.')</script>";
 		}
 		
 	} else {
-		echo "<script>alert('Password Not Matched.')</script>";
+		echo "<script>alert('Passwords Do not Match.')</script>";
 	}
 }
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +74,7 @@ if (isset($_POST['register'])) {
                             <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
                         </div>
                         <div class="form-group">
-                            <input type="submit"  id="register" class="form-submit" value="Sign up"/>
+                            <input type="submit" id="register" name = "register" class="form-submit" value="Sign up"/>
                         </div>
                     </form>
                     <p class="loginhere">
